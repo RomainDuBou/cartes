@@ -1,16 +1,14 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { db } from '../firebase'
 import { 
-  collection, 
-  doc, 
-  addDoc, 
-  updateDoc, 
-  deleteDoc, 
-  onSnapshot,
-  query,
-  orderBy 
-} from 'firebase/firestore'
-import { generateId, calculateMaxStreak } from '../utils/helpers'
+  ref, 
+  onValue, 
+  push, 
+  set, 
+  update, 
+  remove 
+} from 'firebase/database'
+import { calculateMaxStreak } from '../utils/helpers'
 
 const GameContext = createContext(null)
 
@@ -22,29 +20,43 @@ export function GameProvider({ children }) {
   // Écouter les changements en temps réel depuis Firebase
   useEffect(() => {
     // Écouter les joueurs
-    const unsubscribePlayers = onSnapshot(
-      collection(db, 'players'),
-      (snapshot) => {
-        const playersData = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
+    const playersRef = ref(db, 'players')
+    const unsubscribePlayers = onValue(playersRef, (snapshot) => {
+      const data = snapshot.val()
+      if (data) {
+        const playersData = Object.keys(data).map(key => ({
+          id: key,
+          ...data[key]
         }))
         setPlayers(playersData)
+      } else {
+        setPlayers([])
       }
-    )
+    }, (error) => {
+      console.error('Erreur chargement joueurs:', error)
+      setLoading(false)
+    })
 
-    // Écouter les parties (triées par date)
-    const unsubscribeGames = onSnapshot(
-      query(collection(db, 'games'), orderBy('createdAt', 'asc')),
-      (snapshot) => {
-        const gamesData = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
+    // Écouter les parties
+    const gamesRef = ref(db, 'games')
+    const unsubscribeGames = onValue(gamesRef, (snapshot) => {
+      const data = snapshot.val()
+      if (data) {
+        const gamesData = Object.keys(data).map(key => ({
+          id: key,
+          ...data[key]
         }))
+        // Trier par date
+        gamesData.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
         setGames(gamesData)
-        setLoading(false)
+      } else {
+        setGames([])
       }
-    )
+      setLoading(false)
+    }, (error) => {
+      console.error('Erreur chargement parties:', error)
+      setLoading(false)
+    })
 
     // Cleanup
     return () => {
@@ -63,7 +75,8 @@ export function GameProvider({ children }) {
         // Mettre à jour seulement si les stats ont changé
         if (player.wins !== wins || player.maxStreak !== maxStreak || player.currentStreak !== currentStreak) {
           try {
-            await updateDoc(doc(db, 'players', player.id), {
+            const playerRef = ref(db, `players/${player.id}`)
+            await update(playerRef, {
               wins,
               currentStreak,
               maxStreak
@@ -89,8 +102,10 @@ export function GameProvider({ children }) {
         maxStreak: 0,
         currentStreak: 0
       }
-      const docRef = await addDoc(collection(db, 'players'), playerData)
-      return { id: docRef.id, ...playerData }
+      const playersRef = ref(db, 'players')
+      const newPlayerRef = push(playersRef)
+      await set(newPlayerRef, playerData)
+      return { id: newPlayerRef.key, ...playerData }
     } catch (error) {
       console.error('Erreur création joueur:', error)
       throw error
@@ -100,7 +115,8 @@ export function GameProvider({ children }) {
   // Mettre à jour un joueur
   const updatePlayer = async (playerId, updates) => {
     try {
-      await updateDoc(doc(db, 'players', playerId), updates)
+      const playerRef = ref(db, `players/${playerId}`)
+      await update(playerRef, updates)
     } catch (error) {
       console.error('Erreur mise à jour joueur:', error)
       throw error
@@ -110,7 +126,8 @@ export function GameProvider({ children }) {
   // Supprimer un joueur
   const deletePlayer = async (playerId) => {
     try {
-      await deleteDoc(doc(db, 'players', playerId))
+      const playerRef = ref(db, `players/${playerId}`)
+      await remove(playerRef)
     } catch (error) {
       console.error('Erreur suppression joueur:', error)
       throw error
@@ -129,8 +146,10 @@ export function GameProvider({ children }) {
         ...gameData,
         createdAt: new Date().toISOString()
       }
-      const docRef = await addDoc(collection(db, 'games'), game)
-      return { id: docRef.id, ...game }
+      const gamesRef = ref(db, 'games')
+      const newGameRef = push(gamesRef)
+      await set(newGameRef, game)
+      return { id: newGameRef.key, ...game }
     } catch (error) {
       console.error('Erreur ajout partie:', error)
       throw error
@@ -140,7 +159,8 @@ export function GameProvider({ children }) {
   // Supprimer une partie
   const deleteGame = async (gameId) => {
     try {
-      await deleteDoc(doc(db, 'games', gameId))
+      const gameRef = ref(db, `games/${gameId}`)
+      await remove(gameRef)
     } catch (error) {
       console.error('Erreur suppression partie:', error)
       throw error
@@ -150,7 +170,8 @@ export function GameProvider({ children }) {
   // Modifier une partie
   const updateGame = async (gameId, updates) => {
     try {
-      await updateDoc(doc(db, 'games', gameId), updates)
+      const gameRef = ref(db, `games/${gameId}`)
+      await update(gameRef, updates)
     } catch (error) {
       console.error('Erreur modification partie:', error)
       throw error
