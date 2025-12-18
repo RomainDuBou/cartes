@@ -1,0 +1,72 @@
+[debug] [2025-12-18T10:15:09.806Z] ----------------------------------------------------------------------
+[debug] [2025-12-18T10:15:09.807Z] Command:       /Users/roms/.nvm/versions/node/v20.12.2/bin/node /Users/roms/.nvm/versions/node/v20.12.2/bin/firebase init hosting
+[debug] [2025-12-18T10:15:09.807Z] CLI Version:   15.0.0
+[debug] [2025-12-18T10:15:09.807Z] Platform:      darwin
+[debug] [2025-12-18T10:15:09.807Z] Node Version:  v20.12.2
+[debug] [2025-12-18T10:15:09.807Z] Time:          Thu Dec 18 2025 11:15:09 GMT+0100 (heure normale d’Europe centrale)
+[debug] [2025-12-18T10:15:09.808Z] ----------------------------------------------------------------------
+[debug] 
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /Users/roms/Desktop/geanbresilen
+
+[info] 
+=== Project Setup
+[info] 
+[info] First, let's associate this project directory with a Firebase project.
+[info] You can create multiple project aliases by running firebase use --add, 
+[info] 
+[debug] [2025-12-18T10:15:47.412Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-12-18T10:15:47.413Z] > authorizing via signed-in user (rduboullay@gmail.com)
+[debug] [2025-12-18T10:15:47.416Z] Checked if tokens are valid: true, expires at: 1766056433530
+[debug] [2025-12-18T10:15:47.416Z] Checked if tokens are valid: true, expires at: 1766056433530
+[debug] [2025-12-18T10:15:47.418Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects pageSize=100
+[debug] [2025-12-18T10:15:48.158Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects 200
+[debug] [2025-12-18T10:15:48.159Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects [omitted]
+[info] 
+=== Hosting Setup
+[debug] [2025-12-18T10:15:51.409Z] Checked if tokens are valid: true, expires at: 1766056433530
+[debug] [2025-12-18T10:15:51.409Z] Checked if tokens are valid: true, expires at: 1766056433530
+[debug] [2025-12-18T10:15:51.410Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/geanbresilien [none]
+[debug] [2025-12-18T10:15:51.723Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/geanbresilien 200
+[debug] [2025-12-18T10:15:51.724Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/geanbresilien {"projectId":"geanbresilien","projectNumber":"691843324614","displayName":"geanbresilien","name":"projects/geanbresilien","resources":{"hostingSite":"geanbresilien"},"state":"ACTIVE","etag":"1_6f9a0ae3-3eee-4c09-a4d4-36e110b47859"}
+[info] 
+[info] Your public directory is the folder (relative to your project directory) that
+[info] will contain Hosting assets to be uploaded with firebase deploy. If you
+[info] have a build process for your assets, use your build's output directory.
+[info] 
+[info] 
+[info] i  Detected a .git folder at /Users/roms/Desktop/geanbresilen 
+[info] i  Authorizing with GitHub to upload your service account to a GitHub repository's secrets store. 
+[info] 
+[info] Visit this URL on this device to log in:
+[info] https://github.com/login/oauth/authorize?client_id=89cf50f02ac6aaed3484&state=312744200&redirect_uri=http%3A%2F%2Flocalhost%3A9005&scope=read%3Auser%20repo%20public_repo
+[info] 
+[info] Waiting for authentication...
+[debug] [2025-12-18T10:16:54.577Z] >>> [apiv2][query] POST https://github.com/login/oauth/access_token [none]
+[debug] [2025-12-18T10:16:54.578Z] >>> [apiv2][body] POST https://github.com/login/oauth/access_token [stream]
+[debug] [2025-12-18T10:16:56.065Z] <<< [apiv2][status] POST https://github.com/login/oauth/access_token 200
+[debug] [2025-12-18T10:16:56.065Z] <<< [apiv2][body] POST https://github.com/login/oauth/access_token {"access_token":"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","token_type":"bearer","scope":"read:user,repo"}
+[debug] [2025-12-18T10:16:56.082Z] >>> [apiv2][query] GET https://api.github.com/user [none]
+[debug] [2025-12-18T10:16:56.717Z] <<< [apiv2][status] GET https://api.github.com/user 200
+[debug] [2025-12-18T10:16:56.718Z] <<< [apiv2][body] GET https://api.github.com/user {"login":"RomainDuBou","id":155824480,"node_id":"U_kgDOCUmxYA","avatar_url":"https://avatars.githubusercontent.com/u/155824480?v=4","gravatar_id":"","url":"https://api.github.com/users/RomainDuBou","html_url":"https://github.com/RomainDuBou","followers_url":"https://api.github.com/users/RomainDuBou/followers","following_url":"https://api.github.com/users/RomainDuBou/following{/other_user}","gists_url":"https://api.github.com/users/RomainDuBou/gists{/gist_id}","starred_url":"https://api.github.com/users/RomainDuBou/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/RomainDuBou/subscriptions","organizations_url":"https://api.github.com/users/RomainDuBou/orgs","repos_url":"https://api.github.com/users/RomainDuBou/repos","events_url":"https://api.github.com/users/RomainDuBou/events{/privacy}","received_events_url":"https://api.github.com/users/RomainDuBou/received_events","type":"User","user_view_type":"private","site_admin":false,"name":"RomainRDB","company":null,"blog":"","location":null,"email":null,"hireable":null,"bio":null,"twitter_username":null,"notification_email":null,"public_repos":14,"public_gists":0,"followers":0,"following":4,"created_at":"2024-01-06T13:08:15Z","updated_at":"2025-04-16T07:50:40Z","private_gists":1,"total_private_repos":6,"owned_private_repos":6,"disk_usage":341818,"collaborators":0,"two_factor_authentication":false,"plan":{"name":"free","space":976562499,"collaborators":0,"private_repos":10000}}
+[info] 
+[info] ✔  Success! Logged into GitHub as RomainDuBou 
+[info] 
+[debug] [2025-12-18T10:17:07.499Z] >>> [apiv2][query] GET https://api.github.com/repos//actions/secrets/public-key type=owner
+[debug] [2025-12-18T10:17:07.793Z] <<< [apiv2][status] GET https://api.github.com/repos//actions/secrets/public-key 404
+[debug] [2025-12-18T10:17:07.793Z] <<< [apiv2][body] GET https://api.github.com/repos//actions/secrets/public-key {"message":"Not Found","documentation_url":"https://docs.github.com/rest","status":"404"}
+[info] 
+[info] 
+[error] ⚠  The provided authorization cannot be used with this repository. If this repository is in an organization, did you remember to grant access? 
+[info] 
+[info] i  Action required: Visit this URL to ensure access has been granted to the appropriate organization(s) for the Firebase CLI GitHub OAuth App: 
+[info] https://github.com/settings/connections/applications/89cf50f02ac6aaed3484
+[info] 
